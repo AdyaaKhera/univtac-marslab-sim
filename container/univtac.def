@@ -1,0 +1,21 @@
+# Ubuntu 22.04 (glibc 2.35) base for the UniVTAC conda env: Isaac Sim 5.1 /
+# Isaac Lab 2.3 wheels need glibc >= 2.35; Gilbreth (RHEL 9) has 2.34.
+# Conda env itself lives on scratch and is bind-mounted at runtime.
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update && apt-get install -y --no-install-recommends \
+        build-essential ca-certificates curl git pkg-config tar unzip zip \
+        libgl1 libegl1 libglu1-mesa libvulkan1 libglib2.0-0 libxkbcommon0 \
+        libx11-6 libxext6 libxrender1 libxt6 libxrandr2 libxinerama1 \
+        libxcursor1 libxi6 libsm6 libice6 libgomp1
+    rm -rf /var/lib/apt/lists/*
+    # NVIDIA Vulkan/EGL vendor files. `--nv` binds the driver libs but the host's
+    # ICD is named nvidia_icd.x86_64.json, which Apptainer does not pick up.
+    mkdir -p /usr/share/vulkan/icd.d /usr/share/glvnd/egl_vendor.d
+    echo '{"file_format_version":"1.0.1","ICD":{"library_path":"libGLX_nvidia.so.0","api_version":"1.3.0"}}' \
+        > /usr/share/vulkan/icd.d/nvidia_icd.json
+    echo '{"file_format_version":"1.0.0","ICD":{"library_path":"libEGL_nvidia.so.0"}}' \
+        > /usr/share/glvnd/egl_vendor.d/10_nvidia.json

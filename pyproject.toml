@@ -1,0 +1,9 @@
+[project]
+name = "lerobot_env_univtac"
+version = "0.1.0"
+description = "UniVTAC (Isaac Sim 5.1 visuo-tactile) as a LeRobot environment"
+requires-python = ">=3.12"
+dependencies = ["lerobot==0.6.1", "h5py", "pyzmq"]
+
+[tool.setuptools]
+packages = ["lerobot_env_univtac"]
