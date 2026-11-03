@@ -6,7 +6,7 @@
 
 | Task | Policy | Inputs | Demos | Success (eval seeds) |
 |---|---|---|---|---|
-| lift_can | Diffusion Policy | head + wrist + 2× tactile + joints | 100 | trained; eval blocked (needs RTX GPU, see PROGRESS) |
+| lift_can | Diffusion Policy | head + wrist + 2× tactile + joints | 100 | training; eval blocked (needs RTX GPU, see PROGRESS) |
 
 Detailed log: [PROGRESS.md](PROGRESS.md)
 
